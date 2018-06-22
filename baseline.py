@@ -3,38 +3,38 @@ from math import ceil
 from random import randint, uniform
 
 # blocks number and size
-blocks = {'1':[0.84,0.84], '2':[0.85,0.43], '3':[0.43,0.85], '4':[0.43,0.43],
-          '5':[0.22,0.22], '6':[0.43,0.22], '7':[0.22,0.43], '8':[0.85,0.22],
-          '9':[0.22,0.85], '10':[1.68,0.22], '11':[0.22,1.68],
-          '12':[2.06,0.22], '13':[0.22,2.06]}
+blocks = {'1': [0.84,0.84], '2': [0.85,0.43], '3': [0.43,0.85], '4': [0.43,0.43],
+          '5': [0.22,0.22], '6': [0.43,0.22], '7': [0.22,0.43], '8': [0.85,0.22],
+          '9': [0.22,0.85], '10': [1.68,0.22], '11': [0.22,1.68],
+          '12': [2.06,0.22], '13': [0.22,2.06]}
 
 # blocks number and name
 # (blocks 3, 7, 9, 11 and 13) are their respective block names rotated 90 derees clockwise
-block_names = {'1':"SquareHole", '2':"RectFat", '3':"RectFat", '4':"SquareSmall",
-               '5':"SquareTiny", '6':"RectTiny", '7':"RectTiny", '8':"RectSmall",
-               '9':"RectSmall",'10':"RectMedium",'11':"RectMedium",
-               '12':"RectBig",'13':"RectBig"}
+block_names = {'1': "SquareHole", '2': "RectFat", '3': "RectFat", '4': "SquareSmall",
+               '5': "SquareTiny", '6': "RectTiny", '7': "RectTiny", '8': "RectSmall",
+               '9': "RectSmall",'10': "RectMedium",'11': "RectMedium",
+               '12': "RectBig",'13': "RectBig"}
 
 # additional objects number and name
-additional_objects = {'1':"TriangleHole", '2':"Triangle", '3':"Circle", '4':"CircleSmall"}
+additional_objects = {'1': "TriangleHole", '2': "Triangle", '3': "Circle", '4': "CircleSmall"}
 
 # additional objects number and size
-additional_object_sizes = {'1':[0.82,0.82],'2':[0.82,0.82],'3':[0.8,0.8],'4':[0.45,0.45]}
+additional_object_sizes = {'1': [0.82,0.82],'2': [0.82,0.82],'3': [0.8,0.8],'4': [0.45,0.45]}
 
 # blocks number and probability of being selected
-probability_table_blocks = {'1':0.10, '2':0.10, '3':0.10, '4':0.05,
-                            '5':0.02, '6':0.05, '7':0.05, '8':0.10,
-                            '9':0.05, '10':0.16, '11':0.04,
-                            '12':0.16, '13':0.02}
+probability_table_blocks = {'1': 0.10, '2': 0.10, '3': 0.10, '4': 0.05,
+                            '5': 0.02, '6': 0.05, '7': 0.05, '8': 0.10,
+                            '9': 0.05, '10': 0.16, '11': 0.04,
+                            '12': 0.16, '13': 0.02}
 
 # materials that are available
 materials = ["wood", "stone", "ice"]
 
 # bird types number and name
-bird_names = {'1':"BirdRed", '2':"BirdBlue", '3':"BirdYellow", '4':"BirdBlack", '5':"BirdWhite"}
+bird_names = {'1': "BirdRed", '2': "BirdBlue", '3': "BirdYellow", '4': "BirdBlack", '5': "BirdWhite"}
 
 # bird types number and probability of being selected
-bird_probabilities = {'1':0.35, '2':0.2, '3':0.2, '4':0.15, '5':0.1}
+bird_probabilities = {'1': 0.35, '2': 0.2, '3': 0.2, '4': 0.15, '5': 0.1}
 
 TNT_block_probability = 0.3
 
