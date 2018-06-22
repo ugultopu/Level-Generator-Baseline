@@ -102,17 +102,13 @@ def generate_subsets(current_tree_bottom):
     return subsets
 
 
-
-
 # finds the center positions of the given subset
 
 def find_subset_center(subset):
-    if len(subset)%2 == 1:
+    if len(subset) % 2 == 1:
         return subset[(len(subset)-1)//2][1]
     else:
         return (subset[len(subset)//2][1] - subset[(len(subset)//2)-1][1])/2.0 + subset[(len(subset)//2)-1][1]
-
-
 
 
 # finds the edge positions of the given subset
@@ -121,8 +117,6 @@ def find_subset_edges(subset):
     edge1 = subset[0][1] - (blocks[str(subset[0][0])][0])/2.0 + edge_buffer
     edge2 = subset[-1][1] + (blocks[str(subset[-1][0])][0])/2.0 - edge_buffer
     return[edge1, edge2]
-
-
 
 
 # checks that positions for new block dont overlap and support the above blocks
@@ -148,10 +142,8 @@ def check_valid(grouping, choosen_item, current_tree_bottom, new_positions):
             if ((new - (blocks[str(choosen_item)][0])/2) <= edge2 and (new + (blocks[str(choosen_item)][0])/2) >= edge2):
                 edge2_supported = True
         if edge1_supported == False or edge2_supported == False:
-                return False
+            return False
     return True
-
-
 
 
 # check if new block can be placed under center of bottom row blocks validly
@@ -163,8 +155,6 @@ def check_center(grouping, choosen_item, current_tree_bottom):
     return check_valid(grouping, choosen_item, current_tree_bottom, new_positions)
 
 
-
-
 # check if new block can be placed under edges of bottom row blocks validly
 
 def check_edge(grouping, choosen_item, current_tree_bottom):
@@ -173,8 +163,6 @@ def check_edge(grouping, choosen_item, current_tree_bottom):
         new_positions.append(find_subset_edges(subset)[0])
         new_positions.append(find_subset_edges(subset)[1])
     return check_valid(grouping, choosen_item, current_tree_bottom, new_positions)
-
-
 
 
 # check if new block can be placed under both center and edges of bottom row blocks validly
@@ -188,8 +176,6 @@ def check_both(grouping, choosen_item, current_tree_bottom):
     return check_valid(grouping, choosen_item, current_tree_bottom, new_positions)
 
 
-
-
 # choose a random item/block from the blocks dictionary based on probability table
 
 def choose_item(table):
@@ -199,8 +185,6 @@ def choose_item(table):
         selected_num = selected_num + 1
         ran_num = ran_num - table[str(selected_num)]
     return selected_num
-
-
 
 
 # finds the width of the given structure
@@ -216,8 +200,6 @@ def find_structure_width(structure):
     return (round(max_x - min_x, 10))
 
 
-
-
 # finds the height of the given structure
 
 def find_structure_height(structure):
@@ -229,8 +211,6 @@ def find_structure_height(structure):
         if round((block[2]+(blocks[str(block[0])][1]/2)), 10) > max_y:
             max_y = round((block[2]+(blocks[str(block[0])][1]/2)), 10)
     return (round(max_y - min_y, 10))
-
-
 
 
 # adds a new row of blocks to the bottom of the structure
@@ -290,8 +270,6 @@ def add_new_row(current_tree_bottom, total_tree):
         return add_new_row(current_tree_bottom, total_tree) # choose a new block and try again if no options available
 
 
-
-
 # creates the peaks (first row) of the structure
 
 def make_peaks(center_point):
@@ -329,8 +307,6 @@ def make_peaks(center_point):
         current_tree_bottom.append([top_item, round(center_point + (blocks[str(top_item)][0]) + distance_apart_extra, 10)] )
         current_tree_bottom.append([top_item, round(center_point + (blocks[str(top_item)][0]*2.0) + (distance_apart_extra*2), 10)] )
     return current_tree_bottom
-
-
 
 
 # recursively adds rows to base of strucutre until max_width or max_height is passed
@@ -451,8 +427,6 @@ def make_structure(absolute_ground, center_point, max_width, max_height):
     return complete_locations, final_pig_positions
 
 
-
-
 # divide the available ground space between the chosen number of ground structures
 
 def create_ground_structures():
@@ -490,8 +464,6 @@ def create_ground_structures():
         final_pig_positions = final_pig_positions + final_pig_positions2
 
     return len(ground_positions), complete_locations, final_pig_positions
-
-
 
 
 # creates a set number of platforms within the level
@@ -599,8 +571,6 @@ def create_platforms(number_platforms, complete_locations, final_pig_positions):
     return number_platforms, final_platforms, platform_centers
 
 
-
-
 # create sutiable structures for each platform
 
 def create_platform_structures(final_platforms, platform_centers, complete_locations, final_pig_positions):
@@ -635,19 +605,15 @@ def create_platform_structures(final_platforms, platform_centers, complete_locat
     return complete_locations, final_pig_positions
 
 
-
-
 # remove random pigs until number equals the desired amount
 
 def remove_unnecessary_pigs(number_pigs):
     removed_pigs = []
     while len(final_pig_positions) > number_pigs:
-              remove_pos = randint(0, len(final_pig_positions)-1)
-              removed_pigs.append(final_pig_positions[remove_pos])
-              final_pig_positions.pop(remove_pos)
+        remove_pos = randint(0, len(final_pig_positions)-1)
+        removed_pigs.append(final_pig_positions[remove_pos])
+        final_pig_positions.pop(remove_pos)
     return final_pig_positions, removed_pigs
-
-
 
 
 # add pigs on the ground until number equals the desired amount
@@ -675,8 +641,6 @@ def add_necessary_pigs(number_pigs):
     return final_pig_positions
 
 
-
-
 # choose the number of birds based on the number of pigs and structures present within level
 
 def choose_number_birds(final_pig_positions, number_ground_structures, number_platforms):
@@ -685,8 +649,6 @@ def choose_number_birds(final_pig_positions, number_ground_structures, number_pl
         number_birds = number_birds + 1
     number_birds = number_birds + 1         # adjust based on desired difficulty
     return number_birds
-
-
 
 
 # identify all possible triangleHole positions on top of blocks
@@ -738,8 +700,6 @@ def find_trihole_positions(complete_locations):
                 possible_trihole_positions.append(test_position)
 
     return possible_trihole_positions
-
-
 
 
 # identify all possible triangle positions on top of blocks
@@ -796,8 +756,6 @@ def find_tri_positions(complete_locations):
     return possible_tri_positions
 
 
-
-
 # identify all possible circle positions on top of blocks (can only be placed in middle of block)
 
 def find_cir_positions(complete_locations):
@@ -842,8 +800,6 @@ def find_cir_positions(complete_locations):
                 possible_cir_positions.append(test_position)
 
     return possible_cir_positions
-
-
 
 
 # identify all possible circleSmall positions on top of blocks
@@ -897,8 +853,6 @@ def find_cirsmall_positions(complete_locations):
     return possible_cirsmall_positions
 
 
-
-
 # finds possible positions for valid additional block types
 
 def find_additional_block_positions(complete_locations):
@@ -917,8 +871,6 @@ def find_additional_block_positions(complete_locations):
     return possible_trihole_positions, possible_tri_positions, possible_cir_positions, possible_cirsmall_positions
 
 
-
-
 # combine all possible additonal block positions into one set
 
 def add_additional_blocks(possible_trihole_positions, possible_tri_positions, possible_cir_positions, possible_cirsmall_positions):
@@ -932,8 +884,8 @@ def add_additional_blocks(possible_trihole_positions, possible_tri_positions, po
     for i in possible_cirsmall_positions:
         all_other.append(['4', i[0], i[1]])
 
-    #randomly choose an additional block position and remove those that overlap it
-    #repeat untill no more valid position
+    # randomly choose an additional block position and remove those that overlap it
+    # repeat untill no more valid position
 
     selected_other = []
     while (len(all_other) > 0):
@@ -949,8 +901,6 @@ def add_additional_blocks(possible_trihole_positions, possible_tri_positions, po
         all_other = new_all_other
 
     return selected_other
-
-
 
 
 # remove restricted block types from the available selection
@@ -969,8 +919,6 @@ def remove_blocks(restricted_blocks):
     return new_prob_table
 
 
-
-
 # add TNT blocks based on removed pig positions
 
 def add_TNT(potential_positions):
@@ -979,8 +927,6 @@ def add_TNT(potential_positions):
         if (uniform(0.0, 1.0) < TNT_block_probability):
             final_TNT_positions.append(position)
     return final_TNT_positions
-
-
 
 
 # write level out in desired xml format
@@ -1010,7 +956,7 @@ def write_level_xml(complete_locations, selected_other, final_pig_positions, fin
 
     for i in selected_other:
         material = materials[randint(0, len(materials)-1)]       # material is chosen randomly
-        while [material, additional_objects[str(i[0])]] in restricted_combinations:      # if material if not allowed for block type then pick again
+        while [material, additional_objects[str(i[0])]] in restricted_combinations:       # if material if not allowed for block type then pick again
             material = materials[randint(0, len(materials)-1)]
         if i[0] == '2':
             facing = randint(0, 1)
@@ -1032,8 +978,6 @@ def write_level_xml(complete_locations, selected_other, final_pig_positions, fin
     f.write('</Level>\n')
 
     f.close()
-
-
 
 
 # generate levels using input parameters
