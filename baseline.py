@@ -1,9 +1,6 @@
-
-from random import randint
-from random import uniform
-from math import sqrt, ceil
 from copy import deepcopy
-import itertools
+from math import ceil
+from random import randint, uniform
 
 # blocks number and size
 blocks = {'1':[0.84,0.84], '2':[0.85,0.43], '3':[0.43,0.85], '4':[0.43,0.43],
@@ -76,7 +73,7 @@ max_attempts = 100                          # number of times to attempt to plac
 
 # generates a list of all possible subsets for structure bottom
 
-def generate_subsets(current_tree_bottom):     
+def generate_subsets(current_tree_bottom):
     current_distances = []
     subsets = []
     current_point = 0
@@ -224,7 +221,7 @@ def find_structure_width(structure):
 
 
 
-   
+
 # finds the height of the given structure
 
 def find_structure_height(structure):
@@ -249,7 +246,7 @@ def add_new_row(current_tree_bottom, total_tree):
     center_groupings = []                               # collection of viable groupings with new block at center
     edge_groupings = []                                 # collection of viable groupings with new block at edges
     both_groupings = []                                 # collection of viable groupings with new block at both center and edges
-    
+
     # check if new block is viable for each grouping in each position
     for grouping in groupings:
         if check_center(grouping,choosen_item,current_tree_bottom):             # check if center viable
@@ -292,7 +289,7 @@ def add_new_row(current_tree_bottom, total_tree):
         current_tree_bottom = new_bottom
         total_tree.append(current_tree_bottom)      # add new bottom row to the structure
         return total_tree, current_tree_bottom      # return the new structure
-    
+
     else:
         return add_new_row(current_tree_bottom, total_tree) # choose a new block and try again if no options available
 
@@ -308,7 +305,7 @@ def make_peaks(center_point):
     top_item = choose_item(probability_table_blocks)    # this is the item at top of structure
 
     if number_peaks == 1:
-        current_tree_bottom.append([top_item,center_point])     
+        current_tree_bottom.append([top_item,center_point])
 
     if number_peaks == 2:
         distance_apart_extra = round(randint(min_peak_split,max_peak_split)/100.0,10)
@@ -344,7 +341,7 @@ def make_peaks(center_point):
 # once this happens the last row added is removed and the structure is returned
 
 def make_structure(absolute_ground, center_point, max_width, max_height):
-    
+
     total_tree = []                 # all blocks of structure (so far)
 
     # creates the first row (peaks) for the structure, ensuring that max_width restriction is satisfied
@@ -485,7 +482,7 @@ def create_ground_structures():
     print("number ground structures:", len(ground_positions))
     print("")
 
-    # creates a ground structure for each defined area 
+    # creates a ground structure for each defined area
     complete_locations = []
     final_pig_positions = []
     for i in range(len(ground_positions)):
@@ -516,7 +513,7 @@ def create_platforms(number_platforms, complete_locations, final_pig_positions):
         temp_platform = []
 
         if platform_width == 1:
-            temp_platform.append(platform_position)     
+            temp_platform.append(platform_position)
 
         if platform_width == 2:
             temp_platform.append([platform_position[0] - (platform_size[0]*0.5),platform_position[1]])
@@ -524,7 +521,7 @@ def create_platforms(number_platforms, complete_locations, final_pig_positions):
 
         if platform_width == 3:
             temp_platform.append([platform_position[0] - (platform_size[0]),platform_position[1]])
-            temp_platform.append(platform_position) 
+            temp_platform.append(platform_position)
             temp_platform.append([platform_position[0] + (platform_size[0]),platform_position[1]])
 
         if platform_width == 4:
@@ -536,7 +533,7 @@ def create_platforms(number_platforms, complete_locations, final_pig_positions):
         if platform_width == 5:
             temp_platform.append([platform_position[0] - (platform_size[0]*2.0),platform_position[1]])
             temp_platform.append([platform_position[0] - (platform_size[0]),platform_position[1]])
-            temp_platform.append(platform_position) 
+            temp_platform.append(platform_position)
             temp_platform.append([platform_position[0] + (platform_size[0]),platform_position[1]])
             temp_platform.append([platform_position[0] + (platform_size[0]*2.0),platform_position[1]])
 
@@ -552,24 +549,24 @@ def create_platforms(number_platforms, complete_locations, final_pig_positions):
             temp_platform.append([platform_position[0] - (platform_size[0]*3.0),platform_position[1]])
             temp_platform.append([platform_position[0] - (platform_size[0]*2.0),platform_position[1]])
             temp_platform.append([platform_position[0] - (platform_size[0]),platform_position[1]])
-            temp_platform.append(platform_position) 
+            temp_platform.append(platform_position)
             temp_platform.append([platform_position[0] + (platform_size[0]),platform_position[1]])
             temp_platform.append([platform_position[0] + (platform_size[0]*2.0),platform_position[1]])
             temp_platform.append([platform_position[0] + (platform_size[0]*3.0),platform_position[1]])
-            
+
         overlap = False
         for platform in temp_platform:
 
             if (((platform[0]-(platform_size[0]/2)) < level_width_min) or ((platform[0]+(platform_size[0])/2) > level_width_max)):
                 overlap = True
-            
+
             for block in complete_locations:
                 if ( round((platform[0] - platform_distance_buffer - platform_size[0]/2),10) <= round((block[1] + blocks[str(block[0])][0]/2),10) and
                      round((platform[0] + platform_distance_buffer + platform_size[0]/2),10) >= round((block[1] - blocks[str(block[0])][0]/2),10) and
                      round((platform[1] + platform_distance_buffer + platform_size[1]/2),10) >= round((block[2] - blocks[str(block[0])][1]/2),10) and
                      round((platform[1] - platform_distance_buffer - platform_size[1]/2),10) <= round((block[2] + blocks[str(block[0])][1]/2),10)):
                     overlap = True
-                    
+
             for pig in final_pig_positions:
                 if ( round((platform[0] - platform_distance_buffer - platform_size[0]/2),10) <= round((pig[0] + pig_size[0]/2),10) and
                      round((platform[0] + platform_distance_buffer + platform_size[0]/2),10) >= round((pig[0] - pig_size[0]/2),10) and
@@ -590,7 +587,7 @@ def create_platforms(number_platforms, complete_locations, final_pig_positions):
                     if i[0]+platform_size[0] > platform[0] and i[0]-platform_size[0] < platform[0]:
                         if i[1]+minimum_height_gap > platform[1] and i[1]-minimum_height_gap < platform[1]:
                             overlap = True
-                            
+
         if overlap == False:
             final_platforms.append(temp_platform)
             platform_centers.append(platform_position)
@@ -599,7 +596,7 @@ def create_platforms(number_platforms, complete_locations, final_pig_positions):
         if attempts > max_attempts:
             attempts = 0
             number_platforms = number_platforms - 1
-            
+
     print("number platforms:", number_platforms)
     print("")
 
@@ -632,7 +629,7 @@ def create_platform_structures(final_platforms, platform_centers, complete_locat
 
         max_width = platform_set_width
         max_height = (min_above - absolute_ground)- pig_size[1] - platform_size[1]
-        
+
         complete_locations2, final_pig_positions2 = make_structure(absolute_ground, center_point, max_width, max_height)
         complete_locations = complete_locations + complete_locations2
         final_pig_positions = final_pig_positions + final_pig_positions2
@@ -690,7 +687,7 @@ def choose_number_birds(final_pig_positions,number_ground_structures,number_plat
     number_birds = int(ceil(len(final_pig_positions)/2))
     if (number_ground_structures + number_platforms) >= number_birds:
         number_birds = number_birds + 1
-    number_birds = number_birds + 1         # adjust based on desired difficulty        
+    number_birds = number_birds + 1         # adjust based on desired difficulty
     return number_birds
 
 
@@ -713,7 +710,7 @@ def find_trihole_positions(complete_locations):
             test_positions = [ [round(block[1],10),round(block[2] + (trihole_height/2) + (block_height/2),10)],
                                [round(block[1] + (block_width/3),10),round(block[2] + (trihole_height/2) + (block_height/2),10)],
                                [round(block[1] - (block_width/3),10),round(block[2] + (trihole_height/2) + (block_height/2),10)] ]
-        
+
         for test_position in test_positions:
             valid_position = True
             for i in complete_locations:
@@ -743,7 +740,7 @@ def find_trihole_positions(complete_locations):
                         valid_position = False
             if valid_position == True:
                 possible_trihole_positions.append(test_position)
-                        
+
     return possible_trihole_positions
 
 
@@ -758,7 +755,7 @@ def find_tri_positions(complete_locations):
         block_height = round(blocks[str(block[0])][1],10)
         tri_width = additional_object_sizes['2'][0]
         tri_height = additional_object_sizes['2'][1]
-        
+
         # don't place block on edge if block too thin
         if blocks[str(block[0])][0] < tri_width:
             test_positions = [ [round(block[1],10),round(block[2] + (tri_height/2) + (block_height/2),10)]]
@@ -766,7 +763,7 @@ def find_tri_positions(complete_locations):
             test_positions = [ [round(block[1],10),round(block[2] + (tri_height/2) + (block_height/2),10)],
                                [round(block[1] + (block_width/3),10),round(block[2] + (tri_height/2) + (block_height/2),10)],
                                [round(block[1] - (block_width/3),10),round(block[2] + (tri_height/2) + (block_height/2),10)] ]
-        
+
         for test_position in test_positions:
             valid_position = True
             for i in complete_locations:
@@ -794,7 +791,7 @@ def find_tri_positions(complete_locations):
                          round((test_position[1] + platform_distance_buffer + tri_height/2),10) > round((j[1] - (platform_size[1]/2)),10) and
                          round((test_position[1] - platform_distance_buffer - tri_height/2),10) < round((j[1] + (platform_size[1]/2)),10)):
                         valid_position = False
-                        
+
             if blocks[str(block[0])][0] < tri_width:      # as block not symmetrical need to check for support
                 valid_position = False
             if valid_position == True:
@@ -817,7 +814,7 @@ def find_cir_positions(complete_locations):
 
         # only checks above block's center
         test_positions = [ [round(block[1],10),round(block[2] + (cir_height/2) + (block_height/2),10)]]
-        
+
         for test_position in test_positions:
             valid_position = True
             for i in complete_locations:
@@ -870,7 +867,7 @@ def find_cirsmall_positions(complete_locations):
             test_positions = [ [round(block[1],10),round(block[2] + (cirsmall_height/2) + (block_height/2),10)],
                                [round(block[1] + (block_width/3),10),round(block[2] + (cirsmall_height/2) + (block_height/2),10)],
                                [round(block[1] - (block_width/3),10),round(block[2] + (cirsmall_height/2) + (block_height/2),10)] ]
-        
+
         for test_position in test_positions:
             valid_position = True
             for i in complete_locations:
@@ -1034,7 +1031,7 @@ def write_level_xml(complete_locations, selected_other, final_pig_positions, fin
 
     for i in final_TNT_positions:
         f.write('<TNT type="" material="" x="%s" y="%s" rotation="0" />\n' % (str(i[0]),str(i[1])))
-        
+
     f.write('</GameObjects>\n')
     f.write('</Level>\n')
 
@@ -1099,7 +1096,7 @@ while (checker != ""):
                 level_name = "0"+str(current_level+finished_levels+4)
             else:
                 level_name = str(current_level+finished_levels+4)
-            
+
             number_ground_structures, complete_locations, final_pig_positions = create_ground_structures()
             number_platforms, final_platforms, platform_centers = create_platforms(number_platforms,complete_locations,final_pig_positions)
             complete_locations, final_pig_positions = create_platform_structures(final_platforms, platform_centers, complete_locations, final_pig_positions)
@@ -1111,7 +1108,3 @@ while (checker != ""):
             selected_other = add_additional_blocks(possible_trihole_positions, possible_tri_positions, possible_cir_positions, possible_cirsmall_positions)
             write_level_xml(complete_locations, selected_other, final_pig_positions, final_TNT_positions, final_platforms, number_birds, level_name, restricted_combinations)
         finished_levels = finished_levels + number_levels
-
-
-
-    
