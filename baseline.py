@@ -67,10 +67,6 @@ ground_structure_height_limit = ((level_height_max - minimum_height_gap) - absol
 max_attempts = 100                          # number of times to attempt to place a platform before abandoning it
 
 
-
-
-
-
 # generates a list of all possible subsets for structure bottom
 
 def generate_subsets(current_tree_bottom):
